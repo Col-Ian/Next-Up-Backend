@@ -17,6 +17,7 @@ const mockResponse = () => {
 	return res as unknown as Response;
 };
 
+//
 describe('createUser', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
@@ -55,32 +56,23 @@ describe('createUser', () => {
 });
 
 describe('deleteUser', () => {
+	let req = mockRequest({ name: 'Testing Delete', email: 'test@delete.ca' });
+	let res = mockResponse();
+
+	const id = Math.floor(0.5 * 1000000);
+	jest.spyOn(Math, 'random').mockReturnValue(0.5);
+
 	beforeEach(() => {
 		jest.clearAllMocks();
+		UserController.createUser(req, res);
 	});
 
 	it('Will delete the user and return 200 if the user exists.', () => {
-		let req = mockRequest({ name: 'Testing Delete', email: 'test@delete.ca' });
-		let res = mockResponse();
-
-		UserController.createUser(req, res);
 		UserController.deleteUser(req, res);
+		expect(res.status).toHaveBeenCalledWith(204);
 	});
 
-	it('Will return 400 if the id is invalid.', () => {
-		let req = mockRequest({ name: 'Testing Delete', email: 'test@delete.ca' });
-		let res = mockResponse();
+	it.todo('Will return 400 if the id is invalid.');
 
-		UserController.createUser(req, res);
-		UserController.deleteUser(req, res);
-	});
-
-	it("Will return 400 if the user doesn't exist.", () => {
-		let req = mockRequest({ name: 'Testing Delete', email: 'test@delete.ca' });
-		let res = mockResponse();
-
-		UserController.createUser(req, res);
-
-		UserController.deleteUser(req, res);
-	});
+	it.todo("Will return 400 if the user doesn't exist.");
 });

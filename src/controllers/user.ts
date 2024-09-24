@@ -75,5 +75,9 @@ export const deleteUser = (req: Request, res: Response) => {
 		return res.status(404).json(rest.error('User not found'));
 	}
 
-	return res.status(200).json(rest.success(user));
+	const index = DEMO_USERS.indexOf(user);
+
+	DEMO_USERS.splice(index, 1);
+
+	return res.status(204).json(rest.success(user));
 };
